@@ -63,6 +63,8 @@
 
 ### Environment
 
+- (JA) Everything so far has been tested with python3.11
+  - Later versions may work, not sure - edit this if it works for you
 - To create venv from provided requirements file saved in project
 
 ```python
