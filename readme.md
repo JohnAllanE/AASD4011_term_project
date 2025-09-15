@@ -72,3 +72,13 @@ pip install -r requirements.txt
 ```
 
 - Do not share your .venv file (add to .gitignore), everyone should build their own environment
+
+## Other dependencies
+
+- Node.js for custom Streamlit components
+- Mac terminal command (with Homebrew):
+
+```bash
+brew install node
+npm install -g yarn
+```
