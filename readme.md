@@ -14,7 +14,10 @@
 ## Style ideas
 
 - Single character (Hamlet)
-- Speeches from politicians etc.
+- KJ Bible, Old Testament.
+- US Presidents Inaugural Addresses (NLTK download).
+- T-Swift Lyrics.
+- Monty Python.
 
 ## Demo ideas
 
