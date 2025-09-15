@@ -79,9 +79,11 @@ pip install -r requirements.txt
 ## Other dependencies
 
 - Node.js for custom Streamlit components
-- Mac terminal command (with Homebrew):
+  - Only needed for development, not running 
+  - Mac terminal command (with Homebrew):
 
 ```bash
 brew install node
 npm install -g yarn
 ```
+
