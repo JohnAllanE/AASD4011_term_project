@@ -45,15 +45,18 @@ def load_trained_model_and_data(base_argument):
     preprocessed_data = pickle.load(open(f'{base_argument}_preprocessed_data.pkl', 'rb'))
     max_seq_length = preprocessed_data['max_seq_length']
     
-    return model, word_to_id, id_to_word, max_seq_length
+    return {"model": model, 
+            "word_to_id": word_to_id, 
+            "id_to_word": id_to_word, 
+            "max_seq_length": max_seq_length}
 
 def generate_text(model, seed_text, num_words_to_generate, word_to_id, id_to_word, max_seq_length):
     # Pre-process the seed text
     # It must be in the same format as your training data: lowercase and numerical
     processed_seed = [word_to_id.get(word.lower(), word_to_id['<UNK>']) for word in seed_text.split()]
-    
-    generated_text = seed_text
-    
+
+    generated_text = "" #seed_text
+
     for _ in range(num_words_to_generate):
         # Pad the input sequence to the required length
         padded_sequence = np.array(processed_seed[-max_seq_length:] + [word_to_id['<PAD>']] * (max_seq_length - len(processed_seed[-max_seq_length:])))

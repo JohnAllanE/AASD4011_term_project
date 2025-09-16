@@ -75,6 +75,7 @@ const MyComponent = ({ args }: Props) => {
     <div
       style={{
         position: "absolute",
+        paddingTop: "3px",
         left: 0,
         top: 0,
         background: boxBgColor,
@@ -90,7 +91,7 @@ const MyComponent = ({ args }: Props) => {
       }}
     >
       {value}
-      <span style={{ color: suggestionColor }}>{suggestion}</span>
+      <span style={{ color: suggestionColor }}> {suggestion}</span>
     </div>
   </div>
   </>
