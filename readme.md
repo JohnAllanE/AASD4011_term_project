@@ -78,10 +78,32 @@ pip install -r requirements.txt
 
 ## Other dependencies
 
+### Environments
+
+- Tensorflow environment for model building and inference
+
+```bash
+python3.11 -m venv .venv-tensorflow
+source .venv-tensorflow/bin/activate
+pip install -r requirements-tensorflow.txt
+```
+
+- Streamlit environment for demo
+
+```bash
+python3.11 -m venv .venv-streamlit
+source .venv-streamlit/bin/activate
+pip install -r requirements-streamlit.txt
+```
+
+### Streamlit development
+
 - Node.js for custom Streamlit components
-- Mac terminal command (with Homebrew):
+  - Mac terminal command (with Homebrew):
 
 ```bash
 brew install node
 npm install -g yarn
 ```
+
+
