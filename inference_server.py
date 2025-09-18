@@ -1,6 +1,7 @@
+#Mac: Open this in a terminal window, using .venv-tensorflow
+#TODO: Try running it in .venv-metal with Flask installed too
 
 from flask import Flask, request, jsonify
-
 from tensorflow.keras.models import load_model
 import numpy as np
 import pickle
@@ -8,11 +9,11 @@ import shared_project_functions as spf
 
 model_list = {
     "shakespeare": "model_0_shakespeare/shakespeare",
-    "lotr": None
+    "sherlock": "model_1_sherlock/sherlock"
 }
 
 model_data = {"shakespeare": spf.load_trained_model_and_data(model_list["shakespeare"]), 
-          "lotr": None}
+          "sherlock": spf.load_trained_model_and_data(model_list["sherlock"])}
 
 app = Flask(__name__)
 
@@ -59,10 +60,11 @@ def autocomplete():
                 suggestions = [generated_text]
             else:
                 suggestions = ["model not found"]
-        print(f"Input text: {input_text}, Length: {len(input_text)}, Suggestions: {suggestions}")
+        print(f"Input text: {input_text}, Model: {model_name}, Suggestions: {suggestions}")
     else:
         print("Duplicate request, using cached suggestions")
     return jsonify({"suggestions": suggestions,
+                    "model": model_name,
                     "model_list": list(model_list.keys())})
 
 if __name__ == '__main__':

@@ -1,7 +1,5 @@
-from tensorflow.keras.models import load_model
-import numpy as np
-import json
-import pickle
+# from tensorflow.keras.models import load_model
+# import numpy as np
 
 def get_target_subdirectory(corpus_name: str, subdir_string: str = "model"):
     import os
@@ -31,6 +29,10 @@ def get_target_subdirectory(corpus_name: str, subdir_string: str = "model"):
     return dir
 
 def load_trained_model_and_data(base_argument):
+    from tensorflow.keras.models import load_model
+    import numpy as np
+    import json
+    import pickle
     # Load the trained Keras model from the .keras file
     model = load_model(f'{base_argument}_model.keras')
 
@@ -51,6 +53,7 @@ def load_trained_model_and_data(base_argument):
             "max_seq_length": max_seq_length}
 
 def generate_text(model, seed_text, num_words_to_generate, word_to_id, id_to_word, max_seq_length):
+    import numpy as np
     # Pre-process the seed text
     # It must be in the same format as your training data: lowercase and numerical
     processed_seed = [word_to_id.get(word.lower(), word_to_id['<UNK>']) for word in seed_text.split()]
