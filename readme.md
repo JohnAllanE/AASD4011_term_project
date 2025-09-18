@@ -105,5 +105,3 @@ pip install -r requirements-streamlit.txt
 brew install node
 npm install -g yarn
 ```
-
-
