@@ -125,6 +125,8 @@ with col1:
     st.markdown('<div style="text-align: right; color: #222E3C; font-size: 1.4em; font-weight: 500;">Subject:</div>', unsafe_allow_html=True)
     st.markdown('<div style="height: 20px"></div>', unsafe_allow_html=True)  # Spacer
     st.markdown('<div style="text-align: right; color: #222E3C; font-size: 1.4em; font-weight: 500;">Model:</div>', unsafe_allow_html=True)
+    st.markdown('<div style="height: 28px"></div>', unsafe_allow_html=True)  # Spacer
+    st.markdown('<div style="text-align: right; color: #222E3C; font-size: 1.4em; font-weight: 500;">Words:</div>', unsafe_allow_html=True)
     st.markdown('<div style="height: 20px"></div>', unsafe_allow_html=True)  # Spacer
     st.markdown('<div style="text-align: right; color: #222E3C; font-size: 1.4em; font-weight: 500;">Body:</div>', unsafe_allow_html=True)
 
@@ -163,17 +165,10 @@ def get_models_from_server():
     model_list = response.get("model_list", ['error in get_model_from_server'])
     return model_list
 model_list = get_models_from_server()
-    
-# Optionally display all suggestions below
-# if suggestions:
-#     st.markdown("<b>Suggestions:</b>", unsafe_allow_html=True)
-#     for s in suggestions:
-#         st.markdown(f"- {s}")
+
 with col2:
     to = st.text_input("To", key="to", label_visibility="collapsed")
     subject = st.text_input("Subject", key="subject", label_visibility="collapsed")
-
-
     
     # Model selection dropdown
     selected_model = st.selectbox(
@@ -184,17 +179,25 @@ with col2:
         label_visibility="collapsed"
     )
     
-
-
+    n_words = st.text_input("Number of Words", key="n_words", label_visibility="collapsed")
+    
     # Get suggestions from inference server based on current text
     suggestions = []
     if st.session_state['body_text']:
         # get last sentence of body text only
         last_sentence = st.session_state['body_text'].strip().split('.')[-1]  # [-1]: last sentence
         suggestions_response = get_suggestions(last_sentence, selected_model)
-        print(f"DEBUG: suggestions from server: {suggestions_response}")
+        #print(f"DEBUG: suggestions from server: {suggestions_response}")
+        
         suggestion_list = suggestions_response.get('suggestions', []) if isinstance(suggestions_response, dict) else []
-        suggestion_to_show = suggestion_list[0] if suggestion_list else ""
+        suggestion_to_show = suggestion_list[0] 
+        if suggestion_list:
+            #Show only the first "n_words" words of the suggestion
+            if n_words.isdigit() and int(n_words) > 0:
+                n = int(n_words) + 1
+                words = suggestion_to_show.split(' ')
+                suggestion_to_show = ' '.join(words[:n]) if len(words) >= n else suggestion_to_show
+        else: suggestion_to_show = ""
     else:
         suggestion_to_show = ""
 
@@ -202,7 +205,9 @@ with col2:
     print("DEBUG: model_list =", model_list)
     print("DEBUG: selected_model (from selectbox) =", selected_model)
     print("DEBUG: st.session_state['selected_model'] =", st.session_state.get("selected_model"))
-
+    
+    
+    
     # Show the text monitor with the first suggestion
     text = text_monitor(
         suggestion=suggestion_to_show,

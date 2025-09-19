@@ -8,6 +8,7 @@
 __pycache__/
 model_0_shakespeare/
 model_1_sherlock/
+model_2_doyle/
 pat.txt
 st_component_template.zip
 cache/
@@ -16,3 +17,7 @@ requirements-tensorflow.txt
 requirements-gutenberg.txt
 requirements-streamlit.txt
 rdf-files.tar.bz2
+glove.6B.100d.txt
+glove.6B.200d.txt
+glove.6B.300d.txt
+glove.6B.50d.txt

@@ -1,4 +1,5 @@
-#Mac: Open this in a terminal window, using .venv-tensorflow
+#Mac: Open this in a terminal window, using 
+# source .venv-tensorflow/bin/activate
 #TODO: Try running it in .venv-metal with Flask installed too
 
 from flask import Flask, request, jsonify
@@ -9,11 +10,13 @@ import shared_project_functions as spf
 
 model_list = {
     "shakespeare": "model_0_shakespeare/shakespeare",
-    "sherlock": "model_1_sherlock/sherlock"
+    "sherlock": "model_1_sherlock/sherlock",
+    "doyle": "model_2_doyle/doyle"
 }
 
 model_data = {"shakespeare": spf.load_trained_model_and_data(model_list["shakespeare"]), 
-          "sherlock": spf.load_trained_model_and_data(model_list["sherlock"])}
+          "sherlock": spf.load_trained_model_and_data(model_list["sherlock"]),
+          "doyle": spf.load_trained_model_and_data(model_list["doyle"])}
 
 app = Flask(__name__)
 
