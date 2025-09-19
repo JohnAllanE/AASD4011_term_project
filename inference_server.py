@@ -11,12 +11,14 @@ import shared_project_functions as spf
 model_list = {
     "shakespeare": "model_0_shakespeare/shakespeare",
     "sherlock": "model_1_sherlock/sherlock",
-    "doyle": "model_2_doyle/doyle"
+    "doyle": "model_2_doyle/doyle",
+    "doyle-2": "model_3_doyle2/doyle2"
 }
 
 model_data = {"shakespeare": spf.load_trained_model_and_data(model_list["shakespeare"]), 
           "sherlock": spf.load_trained_model_and_data(model_list["sherlock"]),
-          "doyle": spf.load_trained_model_and_data(model_list["doyle"])}
+          "doyle": spf.load_trained_model_and_data(model_list["doyle"]),
+          "doyle-2": spf.load_trained_model_and_data(model_list["doyle-2"])}
 
 app = Flask(__name__)
 
