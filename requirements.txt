@@ -97,9 +97,6 @@ stack-data==0.6.3
 streamlit==1.49.1
 streamlit-js-eval==0.1.7
 tenacity==9.1.2
-tensorboard==2.20.0
-tensorboard-data-server==0.7.2
-tensorflow==2.20.0
 termcolor==3.1.0
 thinc==8.3.6
 toml==0.10.2
