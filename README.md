@@ -15,7 +15,7 @@ You will need THREE terminal consoles, one for each environment. The following p
 ### Terminal 0 - Transformer
 
 ``` sh
-# Initiate the environment (Linux, and Mac-os)
+# Initiate the environment (Linux, macOS, and UNIX-like)
 source .venv_transformer/bin/activate
 
 # Run the transformer server
@@ -25,7 +25,7 @@ python inference_server_gpt2.py
 ### Terminal 1 - Tensorflow
 
 ``` sh
-# Initiate the environment (Linux, and Mac-os)
+# Initiate the environment (Linux, macOS, and UNIX-like)
 source .venv_tensorflow/bin/activate
 
 # Run the transformer server
@@ -45,13 +45,12 @@ Press CTRL+C to quit
 ### Terminal 2 - Streamlit Demo
 
 ``` sh
-# Initiate the environment (Linux, and Mac-os)
+# Initiate the environment (Linux, macOS, and UNIX-like)
 source .venv_demo/bin/activate
 
 # Run the streamlit demo, it should open a browser window
 streamlit run demo.py
 ```
-
 
 ## Environments
 
@@ -65,7 +64,7 @@ python3 -m venv .venv_transformer
 ```
 
 ``` sh
-# Initiate the environment (Linux, and Mac-os)
+# Initiate the environment (Linux, macOS, and UNIX-like)
 source .venv_transformer/bin/activate
 ```
 
@@ -87,7 +86,7 @@ python3 -m venv .venv_tensorflow
 ```
 
 ``` sh
-# Initiate the environment (Linux, and Mac-os)
+# Initiate the environment (Linux, macOS, and UNIX-like)
 source .venv_tensorflow/bin/activate
 ```
 
@@ -104,7 +103,7 @@ python3 -m venv .venv_demo
 ```
 
 ``` sh
-# Initiate the environment (Linux, and Mac-os)
+# Initiate the environment (Linux, macOS, and UNIX-like)
 source .venv_demo/bin/activate
 ```
 
@@ -113,4 +112,24 @@ source .venv_demo/bin/activate
 pip install -r requirements_streamlit.txt
 ```
 
-You should also install Node.js and npm for custom streamlit components. Please search how to install these for your operating system.
+You will also need [Node.js](https://nodejs.org/en/download) and [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) for custom streamlit components.
+
+### Check (Unix-like, optional)
+
+``` sh
+# List directories start with .venv
+ls -a .venv*
+```
+
+You should see three `.venv_` directories:
+
+``` console
+.venv_demo:
+.  ..  bin  etc  include  lib  lib64  pyvenv.cfg  share
+
+.venv_tensorflow:
+.  ..  bin  include  lib  lib64  pyvenv.cfg  share
+
+.venv_transformer:
+.  ..  bin  include  lib  lib64  pyvenv.cfg  share
+```
