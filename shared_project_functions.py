@@ -36,16 +36,18 @@ def load_trained_model_and_data(base_argument):
     # Load the trained Keras model from the .keras file
     model = load_model(f'{base_argument}_model.keras')
 
-    # Load the vocabulary mappings
-    with open(f'{base_argument}_word_to_id.json', 'r') as f:
-        word_to_id = json.load(f)
+    # Load preprocessed data from pkl file
+    with open(f"{base_argument}_preprocessed_data.pkl", "rb") as f:
+        data = pickle.load(f)
+        X_train = data["X_train"]
+        y_train = data["y_train"]
+        word_to_id = data["word_to_id"]
+        id_to_word = data["id_to_word"]
+        max_seq_length = data["max_seq_length"]
+        attention_masks = data["attention_masks"] if "attention_masks" in data else None
 
     # The id_to_word dictionary can be created from word_to_id
     id_to_word = {v: k for k, v in word_to_id.items()}
-
-    # Load max_seq_length from pkl file
-    preprocessed_data = pickle.load(open(f'{base_argument}_preprocessed_data.pkl', 'rb'))
-    max_seq_length = preprocessed_data['max_seq_length']
     
     return {"model": model, 
             "word_to_id": word_to_id, 
