@@ -7,6 +7,7 @@ from tensorflow.keras.models import load_model
 import numpy as np
 import pickle
 import shared_project_functions as spf
+import requests
 
 model_list = {
     "shakespeare": "model_0_shakespeare/shakespeare",
@@ -83,7 +84,7 @@ def autocomplete():
                                         "input_text": input_text, 
                                         "save_dir": model_list[model_name]
                                       }, 
-                                      timeout=2)
+                                      timeout=15)
                     suggestions = r.json().get("suggestions", ["no suggestions"])
 
                 else:
