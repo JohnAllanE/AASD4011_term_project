@@ -12,20 +12,44 @@ model_list = {
     "shakespeare": "model_0_shakespeare/shakespeare",
     "sherlock": "model_1_sherlock/sherlock",
     "doyle": "model_2_doyle/doyle",
-    # "doyle-2": "model_3_doyle2/doyle2"
+    # "doyle-2": "model_3_doyle2/doyl
+    "shakespeare-gpt2": "shakespeare_transformer/shakespeare_gpt2_final",
+
 }
 
 model_data = {"shakespeare": spf.load_trained_model_and_data(model_list["shakespeare"]), 
     "sherlock": spf.load_trained_model_and_data(model_list["sherlock"]),
     "doyle": spf.load_trained_model_and_data(model_list["doyle"]),
     # "doyle-2": spf.load_trained_model_and_data(model_list["doyle-2"])
+    "shakespeare-gpt2": " ",
 }
+
+# NOTE: Please add the GPT2 model name
+# The models which is trained on GPT2 (pytorch)
+gpt2_model_list = [
+    "shakespeare-gpt2",
+]
 
 app = Flask(__name__)
 
 last_input_text = None
 suggestions = []
 model_name = None
+
+# Depends on global variable gpt2_model_list
+def is_gpt2(model_name: str) -> bool:
+    """
+    Check if model_name is in `gpt2_model_list`
+
+    Return:
+        it_is (bool): it is
+    """
+    it_is = False
+    for gpt2_model in gpt2_model_list:
+        if model_name == gpt2_model:
+            it_is = True
+    return it_is
+
 
 @app.route('/autocomplete', methods=['POST'])
 def autocomplete():     
@@ -52,18 +76,29 @@ def autocomplete():
         else:
             # Use the selected model to generate suggestions
             if model_name in model_data and model_data[model_name] is not None:
-                model_info = model_data[model_name]
-                model = model_info["model"]
-                word_to_id = model_info["word_to_id"]
-                id_to_word = model_info["id_to_word"]
-                max_seq_length = model_info["max_seq_length"]
-                # Generate text using the model
-                num_words_to_generate = 5  # Number of words to generate
-                generated_text = spf.generate_text(model, input_text, num_words_to_generate, word_to_id, id_to_word, max_seq_length)
-                words = generated_text.split(' ')
+                if is_gpt2(model_name):
+                    GPT2_SERVER_URL = "http://localhost:6000/gpt2"
+                    r = requests.post(GPT2_SERVER_URL, 
+                                      json={
+                                        "input_text": input_text, 
+                                        "save_dir": model_list[model_name]
+                                      }, 
+                                      timeout=2)
+                    suggestions = r.json().get("suggestions", ["no suggestions"])
+
+                else:
+                    model_info = model_data[model_name]
+                    model = model_info["model"]
+                    word_to_id = model_info["word_to_id"]
+                    id_to_word = model_info["id_to_word"]
+                    max_seq_length = model_info["max_seq_length"]
+                    # Generate text using the model
+                    num_words_to_generate = 5  # Number of words to generate
+                    generated_text = spf.generate_text(model, input_text, num_words_to_generate, word_to_id, id_to_word, max_seq_length)
+                    words = generated_text.split(' ')
                 
-                # Return only the newly generated words as suggestions
-                suggestions = [generated_text]
+                    # Return only the newly generated words as suggestions
+                    suggestions = [generated_text]
             else:
                 suggestions = ["model not found"]
         print(f"Input text: {input_text}, Model: {model_name}, Suggestions: {suggestions}")
