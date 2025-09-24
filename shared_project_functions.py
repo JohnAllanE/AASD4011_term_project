@@ -2,6 +2,18 @@
 # import numpy as np
 
 def get_target_subdirectory(corpus_name: str, subdir_string: str = "model"):
+    """
+    Finds or creates a target subdirectory for a given corpus name and subdirectory prefix.
+    This function searches the current working directory for a subdirectory ending with the specified corpus name.
+    If such a directory exists, its name is returned. Otherwise, it creates a new subdirectory with a unique
+    index and the given corpus name, following the pattern: '{subdir_string}_{index}_{corpus_name}'.
+    Args:
+        corpus_name (str): The name of the corpus to be used in the subdirectory name.
+        subdir_string (str, optional): The prefix for the subdirectory name. Defaults to "model".
+    Returns:
+        str: The name of the found or newly created subdirectory.
+    
+    """
     import os
 
     #first, find if there is already a subdirectory ending in corpus_name
@@ -29,6 +41,27 @@ def get_target_subdirectory(corpus_name: str, subdir_string: str = "model"):
     return dir
 
 def load_trained_model_and_data(base_argument):
+    """
+    Loads a trained Keras model and associated data required for text processing.
+    Given a base file path argument, this function loads:
+    - A trained Keras model from a `.keras` file.
+    - A word-to-ID mapping from a JSON file.
+    - An ID-to-word mapping (constructed from the word-to-ID mapping).
+    - The maximum sequence length from a pickled preprocessed data file.
+    Args:
+        base_argument (str): The base file path (without extension) used to locate the model and data files.
+    Returns:
+        dict: A dictionary containing:
+            - "model": The loaded Keras model.
+            - "word_to_id": Dictionary mapping words to their integer IDs.
+            - "id_to_word": Dictionary mapping integer IDs to words.
+            - "max_seq_length": The maximum sequence length used during preprocessing.
+    Raises:
+        FileNotFoundError: If any of the required files are not found.
+        Exception: For errors during model or data loading
+    
+    """
+    
     from tensorflow.keras.models import load_model
     import numpy as np
     import json
